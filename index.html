@@ -2,7 +2,7 @@
   <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <title>Favicon Badge</title>
-<!--    <link id="favicon" rel="icon" type="image/png" href="ical-icon-complete.png" /> -->
+
 
     <link id="favicon" rel="icon" type="image/png" href="favicon.png" />
     
@@ -19,29 +19,40 @@ var canvas = document.createElement('canvas'),
     link = document.getElementById('favicon').cloneNode(true);
     
 if (canvas.getContext) {
-  canvas.height = canvas.width = 16; // set the size
+  canvas.height = canvas.width = 16;
   ctx = canvas.getContext('2d');
-  i=0;
-}
+  i=1;
+  img.onload = function () { // once the image has loaded
+
+
+
+    setInterval(function() {
+      drawIconBadge();  
+    }, 1000);
+
+  };
+  
+  img.src = 'favicon.png';
+
 
 function drawIconBadge() {
-  img.onload = function () { // once the image has loaded
-    ctx.drawImage(this, 0, 0);
-    ctx.font = 'bold 10px "helvetica", sans-serif';
-    ctx.fillStyle = '#F0EEDD';
-    ctx.fillText(i++, 2, 12);
+  ctx.clearRect(0,0,16,16);
+  
+
+    ctx.drawImage(img, 0, 0);
+    ctx.fillStyle = '#f00';
+//    ctx.arc(4,12,5,0,2*Math.PI, false);
+//    ctx.fill();
+    ctx.font = 'bold 8px Helvetica, sans-serif';
+    ctx.fillStyle = '#111';
+    b = (i>9)?"9":i++;
+    
+    ctx.fillText(b, 12, 15);
     link.href = canvas.toDataURL('image/png');
     document.body.appendChild(link);
-  };
-  img.src = 'favicon.png';
 }
 
-
-
-setInterval(function() {
-  drawIconBadge();  
-}, 1000);
-
+}
 })();
 </script>    
   </body>
